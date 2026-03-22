@@ -121,7 +121,7 @@ function BadgeLink({ href, children, icon, className }: BadgeLinkProps) {
           className="tooltip-container pointer-events-none absolute bottom-full left-1/2 z-20 mb-1 opacity-0 transition-all duration-200 ease-out group-hover/badge:opacity-100 group-hover/badge:translate-y-0 translate-y-0.5"
           style={vars}
         >
-          <span className="tooltip-content flex gap-1.5 origin-bottom items-center justify-center px-2.5 py-1.5 rounded-lg bg-[oklch(31.4%_0_0/60%)] backdrop-blur-md text-foreground shadow-[inset_0_1px_0_oklch(100%_0_0/40%),0_4px_12px_oklch(0%_0_0/60%)]">
+          <span className="tooltip-content flex gap-1.5 origin-bottom items-center justify-center px-2.5 py-1.5 rounded-lg bg-surface/60 backdrop-blur-md text-foreground shadow-[inset_0_1px_0_oklch(100%_0_0/40%),0_4px_12px_oklch(0%_0_0/60%)]">
             <span className="[&_svg]:size-4 [&_svg]:shrink-0">{iconNode}</span>
             <span className="text-xs font-medium whitespace-nowrap">{iconLabel}</span>
           </span>

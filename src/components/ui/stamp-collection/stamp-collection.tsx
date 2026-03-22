@@ -62,6 +62,9 @@ const MailIcon = () => (
 const StampCollection = () => {
   const [isHovered, setIsHovered] = useState(false)
   const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   // Define initial layout order: Stamp 3 (index 2) is the visual center
   const INITIAL_STAMPS = [
@@ -89,6 +92,27 @@ const StampCollection = () => {
     }, 1000)
     return () => clearTimeout(timer)
   }, [])
+
+  const validateEmail = (email: string) => {
+    if (!email) return 'Email address is required'
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Please enter a valid email'
+    return ''
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    const error = validateEmail(email)
+    if (error) {
+      setEmailError(error)
+      return
+    }
+    setEmailError('')
+    setIsSubmitting(true)
+    setTimeout(() => {
+      setEmail('')
+      setIsSubmitting(false)
+    }, 1500)
+  }
 
   const handlePointerEnter = () => {
     if (selectedId) return // Don't randomize while focused
@@ -185,7 +209,7 @@ const StampCollection = () => {
                   ? 'blur(4px) brightness(0.7)'
                   : isHovered && !selectedId
                     ? 'drop-shadow(0 12px 24px oklch(0% 0 0 / 21%))'
-                    : 'drop-shadow(0 2.4px 4.8px oklch(0% 0 0 / 10.5%))',
+                    : 'drop-shadow(0 2px 4px oklch(0% 0 0 / 10%))',
               }}
               transition={isSelected || selectedId === null ? FOCUS_TRANSITION : TRANSITION}
               style={{
@@ -206,29 +230,46 @@ const StampCollection = () => {
 
       {/* Newsletter Section */}
       <div
-        className={`flex flex-col items-center gap-6 w-full max-w-[320px] sm:max-w-[360px] transition-all duration-500 ease-in-out ${
+        className={`flex flex-col items-center gap-4 w-full max-w-[320px] sm:max-w-[360px] transition-all duration-500 ease-in-out ${
           isAnythingSelected ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'
         }`}
       >
         <p className="text-xl text-foreground-secondary font-semibold tracking-tight text-center">
           Subscribe to the newsletter!
         </p>
-        <form className="relative w-full group" onSubmit={e => e.preventDefault()}>
+        <form className="relative w-full group" onSubmit={handleSubmit} noValidate>
+          <label htmlFor="newsletter-email" className="sr-only">
+            Email address
+          </label>
           <div className="absolute left-4 top-[50%] -translate-y-1/2 text-foreground-muted pointer-events-none group-focus-within:text-accent transition-colors duration-300">
             <MailIcon />
           </div>
           <input
+            id="newsletter-email"
             type="email"
+            value={email}
+            onChange={e => {
+              setEmail(e.target.value)
+              if (emailError) setEmailError('')
+            }}
             placeholder="Email address"
-            className="w-full h-11 pl-11 pr-24 rounded-full bg-[oklch(31.4%_0_0/60%)] border border-border/40 text-foreground text-base placeholder:text-foreground-muted focus:outline-none focus:ring-1 focus:ring-accent/40 focus:border-accent/40 focus:bg-[oklch(31.4%_0_0/80%)] focus:shadow-[0_0_20px_oklch(var(--accent-l)_var(--accent-c)_var(--accent-h)/15%)] transition-all duration-300"
+            aria-invalid={!!emailError}
+            aria-describedby={emailError ? 'email-error' : undefined}
+            className="w-full h-11 pl-11 pr-24 rounded-full bg-surface/60 border border-border/40 text-foreground text-base placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/40 focus:bg-surface/80 transition-all duration-300"
           />
           <button
             type="submit"
-            className="absolute right-1 top-1 bottom-1 px-5 rounded-full bg-foreground text-background text-sm font-semibold hover:bg-foreground/90 active:scale-[0.97] transition-all duration-200"
+            disabled={isSubmitting}
+            className="absolute right-1 top-1 bottom-1 px-5 rounded-full bg-foreground text-background text-sm font-semibold hover:bg-foreground/90 active:scale-[0.97] disabled:opacity-50 transition-all duration-200"
           >
-            Join
+            {isSubmitting ? '...' : 'Join'}
           </button>
         </form>
+        {emailError && (
+          <p id="email-error" className="text-sm text-red-400" role="alert">
+            {emailError}
+          </p>
+        )}
       </div>
     </div>
   )
