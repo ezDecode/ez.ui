@@ -184,8 +184,8 @@ const StampCollection = () => {
                 filter: isDimmed
                   ? 'blur(4px) brightness(0.7)'
                   : isHovered && !selectedId
-                    ? 'drop-shadow(0 12px 24px rgba(0,0,0,0.21))'
-                    : 'drop-shadow(0 2.4px 4.8px rgba(0,0,0,0.105))',
+                    ? 'drop-shadow(0 12px 24px oklch(0% 0 0 / 21%))'
+                    : 'drop-shadow(0 2.4px 4.8px oklch(0% 0 0 / 10.5%))',
               }}
               transition={isSelected || selectedId === null ? FOCUS_TRANSITION : TRANSITION}
               style={{
@@ -210,7 +210,7 @@ const StampCollection = () => {
           isAnythingSelected ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'
         }`}
       >
-        <p className="text-xl text-foreground-secondary font-medium tracking-tight text-center">
+        <p className="text-xl text-foreground-secondary font-semibold tracking-tight text-center">
           Subscribe to the newsletter!
         </p>
         <form className="relative w-full group" onSubmit={e => e.preventDefault()}>

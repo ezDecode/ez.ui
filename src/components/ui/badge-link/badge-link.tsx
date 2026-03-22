@@ -4,7 +4,16 @@ import type { CSSProperties, ReactNode } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
-/* ─── Icons ────────────────────────────────────────────────────────────── */
+/* ─── Icon labels ─────────────────────────────────────────────────────────── */
+
+const ICON_LABELS: Record<string, string> = {
+  github: 'GitHub',
+  x: 'X',
+  mail: 'Email',
+  link: 'Link',
+}
+
+/* ─── Icons ──────────────────────────────────────────────────────────────── */
 
 function GithubIcon() {
   return (
@@ -95,9 +104,11 @@ function BadgeLink({ href, children, icon, className }: BadgeLinkProps) {
   const vars = tooltipVars(href)
 
   let iconNode: ReactNode = null
+  let iconLabel = ''
   if (typeof icon === 'string' && icon in BUILT_IN) {
     const Icon = BUILT_IN[icon as BuiltInIcon]
     iconNode = <Icon />
+    iconLabel = ICON_LABELS[icon] || ''
   } else if (icon) {
     iconNode = icon
   }
@@ -107,13 +118,12 @@ function BadgeLink({ href, children, icon, className }: BadgeLinkProps) {
       {iconNode ? (
         <span
           aria-hidden="true"
-          className="tooltip-container pointer-events-none absolute bottom-full left-1/2 z-20 mb-[2px] opacity-0 transition-all duration-200 ease-out group-hover/badge:opacity-100 group-hover/badge:translate-y-0 translate-y-1"
+          className="tooltip-container pointer-events-none absolute bottom-full left-1/2 z-20 mb-1 opacity-0 transition-all duration-200 ease-out group-hover/badge:opacity-100 group-hover/badge:translate-y-0 translate-y-0.5"
           style={vars}
         >
-          <span className="tooltip-content bg-[oklch(31.4%_0_0/60%)]! backdrop-blur-md flex size-9 origin-bottom items-center justify-center rounded-xl text-foreground shadow-[inset_0_1px_0_oklch(100%_0_0/40%),inset_0_-1px_0_oklch(0%_0_0/42%),0_8px_22px_-10px_oklch(0%_0_0/75%),0_2px_8px_-4px_oklch(0%_0_0/55%)]!">
-            <span className="inline-flex size-5 items-center justify-center text-foreground-secondary transition-colors duration-300 group-hover/badge:text-foreground [&_svg]:size-5 [&_svg]:shrink-0">
-              {iconNode}
-            </span>
+          <span className="tooltip-content flex gap-1.5 origin-bottom items-center justify-center px-2.5 py-1.5 rounded-lg bg-[oklch(31.4%_0_0/60%)] backdrop-blur-md text-foreground shadow-[inset_0_1px_0_oklch(100%_0_0/40%),0_4px_12px_oklch(0%_0_0/60%)]">
+            <span className="[&_svg]:size-4 [&_svg]:shrink-0">{iconNode}</span>
+            <span className="text-xs font-medium whitespace-nowrap">{iconLabel}</span>
           </span>
         </span>
       ) : null}
@@ -122,7 +132,7 @@ function BadgeLink({ href, children, icon, className }: BadgeLinkProps) {
   )
 
   const cls = cn(
-    'group/badge relative inline-flex items-baseline gap-[0.2em] whitespace-nowrap align-baseline text-[1em] text-foreground-secondary',
+    'group/badge relative inline-flex items-baseline gap-[0.2em] whitespace-nowrap align-baseline text-base text-foreground-secondary',
     'transition-colors duration-150 ease-out hover:text-foreground focus-visible:text-foreground',
     'focus-visible:rounded-[2px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background',
     className

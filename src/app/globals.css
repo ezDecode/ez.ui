@@ -153,28 +153,18 @@
     --tooltip-rotate: 0deg;
     --tooltip-shift: 0px;
     opacity: 0;
-    transform: translateX(calc(-50% + var(--tooltip-shift)));
+    transform: translateX(calc(-50% + var(--tooltip-shift))) rotate(var(--tooltip-rotate));
     pointer-events: none;
   }
 
   .tooltip-content {
-    transform: translateX(calc(-50% + var(--tooltip-shift))) translateY(4px)
-      rotate(var(--tooltip-rotate)) scale(0.9);
+    transform: translateY(4px) scale(0.9);
     opacity: 0;
-    background: linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--color-surface) 100%, oklch(100% 0 0) 5%) 0%,
-      var(--color-surface) 100%
-    );
-    box-shadow:
-      0 4px 12px oklch(0% 0 0 / 20%),
-      inset 0 1px 0 oklch(100% 0 0 / 10%);
   }
 
   .group\/badge:hover .tooltip-container,
   .group\/badge:focus-visible .tooltip-container {
     opacity: 1;
-    animation: tooltip-fade-in 200ms ease forwards;
   }
 
   .group\/badge:hover .tooltip-content,
