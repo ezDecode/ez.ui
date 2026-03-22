@@ -1,57 +1,38 @@
-import type { Metadata, Viewport } from 'next'
-import Link from 'next/link'
+import type { Metadata } from 'next'
+import localFont from 'next/font/local'
 import './globals.css'
 
+const inter = localFont({
+  src: '../../public/fonts/Inter-var.woff2',
+  variable: '--font-inter',
+  display: 'swap',
+  preload: true,
+  weight: '100 900',
+})
+
+const louize = localFont({
+  src: [
+    { path: '../../public/fonts/LouizeRegular.woff2', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/LouizeItalic.woff2', weight: '400', style: 'italic' },
+    { path: '../../public/fonts/LouizeMedium.woff2', weight: '500', style: 'normal' },
+    { path: '../../public/fonts/LouizeMediumItalic.woff2', weight: '500', style: 'italic' },
+  ],
+  variable: '--font-louize',
+  display: 'swap',
+  preload: true,
+})
+
 export const metadata: Metadata = {
-  title: {
-    template: `%s — ez.ui`,
-    default: 'ez.ui — Design System',
-  },
-  description: 'A minimal, dark-first design system built with precision.',
-  keywords: ['design system', 'react', 'next.js', 'tailwindcss', 'ui components'],
+  title: 'ez.ui — Animated React Components',
+  description:
+    'Animated React component library by @ezDecode, extracted from creativesky.me. Built with Tailwind CSS v4, Motion, and OKLCH colors.',
 }
 
-export const viewport: Viewport = {
-  maximumScale: 1,
-  colorScheme: 'dark',
-  themeColor: 'oklch(19.8% 0 0)',
-}
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
-      <body className="bg-background text-foreground antialiased">
-        <div className="min-h-dvh flex flex-col">
-          <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-sm">
-            <div className="mx-auto flex h-14 max-w-content items-center justify-between px-6">
-              <Link href="/" className="font-semibold text-foreground hover:text-accent transition-colors">
-                ez.ui
-              </Link>
-              <nav className="flex items-center gap-6 text-sm text-foreground-secondary">
-                <Link href="/docs" className="hover:text-foreground transition-colors">
-                  Docs
-                </Link>
-                <Link href="/docs/components" className="hover:text-foreground transition-colors">
-                  Components
-                </Link>
-              </nav>
-            </div>
-          </header>
-          <main className="flex-1 mx-auto w-full max-w-content px-6 py-12">
-            {children}
-          </main>
-          <footer className="border-t border-border">
-            <div className="mx-auto max-w-content px-6 py-8">
-              <p className="text-sm text-foreground-muted">
-                Built with Next.js and TailwindCSS v4
-              </p>
-            </div>
-          </footer>
-        </div>
+    <html lang="en" className={`${inter.variable} ${louize.variable} dark`}>
+      <body className="min-h-screen antialiased font-sans bg-background text-foreground">
+        {children}
       </body>
     </html>
   )

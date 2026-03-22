@@ -1,26 +1,32 @@
 {
-  "name": "ez-ui-temp",
-  "version": "0.1.0",
+  "name": "ez.ui",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "16.2.1",
+    "next": "16.1.6",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "clsx": "^2.1.1",
+    "motion": "^12.34.3",
+    "tailwind-merge": "^2.5.2"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
+    "@tailwindcss/postcss": "4.2.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.1",
-    "tailwindcss": "^4",
+    "eslint": "^9.39.3",
+    "eslint-config-next": "^16.1.6",
+    "prettier": "^3.5.0",
+    "tailwindcss": "4.2.1",
     "typescript": "^5"
   }
 }
