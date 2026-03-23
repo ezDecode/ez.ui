@@ -8,6 +8,7 @@ export interface RegistryEntry {
   name: string
   description: string
   Section: ReactNode
+  command: string
 }
 
 export const registry: RegistryEntry[] = [
@@ -16,6 +17,7 @@ export const registry: RegistryEntry[] = [
     name: 'Stamp Collection',
     description: 'Scatter · hover · zoom',
     Section: <StampCollection />,
+    command: 'npx shadcn@latest add @ez-pi/stamp-collection',
   },
 ]
 

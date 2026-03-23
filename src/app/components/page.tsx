@@ -1,6 +1,40 @@
+'use client'
+
 import Link from 'next/link'
+import { useState } from 'react'
 import { AnimateIn } from '@/components/ui/animate-in'
 import { registry } from '@/components/registry'
+import { Check, Copy } from 'lucide-react'
+
+function CopyButton({ command }: { command: string }) {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(command)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <button
+      onClick={handleCopy}
+      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium text-foreground-muted bg-neutral-800/60 hover:bg-neutral-800/80 hover:text-foreground transition-all duration-200"
+      title="Copy command"
+    >
+      {copied ? (
+        <>
+          <Check className="w-3.5 h-3.5" />
+          <span>Copied!</span>
+        </>
+      ) : (
+        <>
+          <Copy className="w-3.5 h-3.5" />
+          <span>Copy</span>
+        </>
+      )}
+    </button>
+  )
+}
 
 export default function ComponentsPage() {
   return (
@@ -32,13 +66,21 @@ export default function ComponentsPage() {
               <div className="relative flex items-center justify-center p-6 sm:p-8 bg-neutral-800/40">
                 {entry.Section}
               </div>
-              <div className="flex items-baseline justify-between gap-3 px-4 py-2.5 border-t border-neutral-700/50 bg-neutral-800/25">
-                <span className="text-base font-medium text-foreground-secondary/70 transition-colors duration-200 group-hover:text-foreground-secondary truncate">
-                  {entry.name}
-                </span>
-                <span className="shrink-0 text-base font-normal text-foreground-muted/60 transition-colors duration-200 group-hover:text-foreground-muted">
-                  {entry.description}
-                </span>
+              <div className="flex items-center justify-between gap-3 px-4 py-2.5 border-t border-neutral-700/50 bg-neutral-800/25">
+                <div className="flex items-center gap-3 min-w-0">
+                  <span className="text-base font-medium text-foreground-secondary/70 transition-colors duration-200 group-hover:text-foreground-secondary truncate">
+                    {entry.name}
+                  </span>
+                  <code className="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs font-mono text-foreground-muted/60 bg-neutral-800/50 truncate">
+                    {entry.command}
+                  </code>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <CopyButton command={entry.command} />
+                  <span className="text-base font-normal text-foreground-muted/60 transition-colors duration-200 group-hover:text-foreground-muted">
+                    {entry.description}
+                  </span>
+                </div>
               </div>
             </article>
           </AnimateIn>
