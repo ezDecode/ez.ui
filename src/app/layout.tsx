@@ -1,26 +1,7 @@
 import type { Metadata, Viewport } from 'next'
-import localFont from 'next/font/local'
+import { GeistMono } from 'geist/font/mono'
+import { GeistSans } from 'geist/font/sans'
 import './globals.css'
-
-const inter = localFont({
-  src: '../../public/fonts/Inter-var.woff2',
-  variable: '--font-inter',
-  display: 'swap',
-  preload: true,
-  weight: '100 900',
-})
-
-const louize = localFont({
-  src: [
-    { path: '../../public/fonts/LouizeRegular.woff2', weight: '400', style: 'normal' },
-    { path: '../../public/fonts/LouizeItalic.woff2', weight: '400', style: 'italic' },
-    { path: '../../public/fonts/LouizeMedium.woff2', weight: '500', style: 'normal' },
-    { path: '../../public/fonts/LouizeMediumItalic.woff2', weight: '500', style: 'italic' },
-  ],
-  variable: '--font-louize',
-  display: 'swap',
-  preload: true,
-})
 
 export const metadata: Metadata = {
   title: 'ez.ui — Animated React Components',
@@ -38,10 +19,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${louize.variable} overflow-x-hidden touch-manipulation`}
+      className={`${GeistMono.variable} ${GeistSans.variable} overflow-x-hidden touch-manipulation`}
     >
       <body
-        className="w-full min-h-dvh relative font-sans text-base leading-relaxed bg-background text-foreground font-normal antialiased tracking-tight [text-rendering:optimizeLegibility] [-webkit-tap-highlight-color:transparent] selection:bg-accent-subtle selection:text-accent"
+        className="w-full min-h-dvh relative font-sans text-base bg-background text-foreground antialiased [text-rendering:optimizeLegibility] [-webkit-tap-highlight-color:transparent] selection:bg-accent-subtle selection:text-accent"
         suppressHydrationWarning
       >
         <main className="relative mx-auto w-full max-w-content px-6 sm:px-8 lg:px-0 pt-16 sm:pt-20 pb-24">

@@ -1,6 +1,7 @@
 'use client'
 
 import { registry } from '@/components/registry'
+import { AnimatedPill } from '@/components/ui/animated-pill'
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from 'motion/react'
 import { useState } from 'react'
 
@@ -14,39 +15,31 @@ export default function Home() {
   const rest = registry.slice(1)
 
   return (
-    <div className="flex flex-col gap-10 mt-12 sm:mt-24">
-      {/* Hero — creativesky-style: quiet, weighted hierarchy */}
-      <header className="flex flex-col gap-1">
-        <h1 className="m-0 text-base font-semibold leading-snug tracking-tight text-foreground">
-          ez.ui
-        </h1>
-        <p className="m-0 text-base font-normal leading-snug tracking-normal text-foreground-muted">
-          Animated React Components
-        </p>
+    <div className="flex flex-col">
+      {/* ── Hero pill ── */}
+      <header>
+        <AnimatedPill text="Animated React Components" />
       </header>
 
-      {/* Description */}
-      <div className="flex flex-col gap-5 text-base leading-relaxed text-foreground-secondary">
-        <p className="m-0">
-          A collection of refined, purposeful animations and interactive components built with
-          Motion. Copy, adapt, and ship.
-        </p>
-      </div>
+      <p className="mt-5 mb-0 text-base leading-relaxed text-foreground-secondary">
+        A collection of refined, purposeful animations and interactive components built with Motion.
+        Copy, adapt, and ship.
+      </p>
 
-      {/* Divider */}
-      <div className="h-px bg-border" />
+      {/* ── Divider — generous breathing before content ── */}
+      <div className="h-px bg-border mt-10" />
 
-      {/* Section heading */}
-      <div className="flex items-center justify-between gap-3">
+      {/* ── Section heading — tight to content below ── */}
+      <div className="flex items-center justify-between gap-3 mt-5 mb-4">
         <h2 className="text-base font-semibold text-foreground">Components</h2>
         <span className="text-base tabular-nums text-foreground-muted">
           {registry.length.toString().padStart(2, '0')}
         </span>
       </div>
 
-      {/* Featured component — large preview card */}
+      {/* ── Featured component — large preview ── */}
       {featured.map((entry, i) => (
-        <motion.div
+        <motion.article
           key={entry.id}
           initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
           animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
@@ -58,26 +51,26 @@ export default function Home() {
                   y: { duration: 0.4, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] },
                 }
           }
-          className="group flex flex-col overflow-hidden rounded-2xl"
+          className="group flex flex-col overflow-hidden rounded-xl"
         >
-          <div className="relative flex min-h-[240px] sm:min-h-[360px] items-center justify-center p-6 bg-neutral-800/40">
+          <div className="relative flex items-center justify-center p-6 sm:p-8 bg-neutral-800/40">
             {entry.Section}
           </div>
-          <div className="flex items-baseline justify-between gap-3 px-4 py-2.5 bg-neutral-800/40">
-            <span className="m-0 text-sm font-medium leading-tight text-foreground-secondary/70 transition-colors duration-200 group-hover:text-foreground-secondary truncate">
+          <div className="flex items-baseline justify-between gap-3 px-4 py-2.5 border-t border-neutral-700/50 bg-neutral-800/25">
+            <span className="text-base font-medium text-foreground-secondary/70 transition-colors duration-200 group-hover:text-foreground-secondary truncate">
               {entry.name}
             </span>
-            <span className="shrink-0 text-sm font-medium text-foreground-muted/60 transition-colors duration-200 group-hover:text-foreground-muted">
+            <span className="shrink-0 text-base font-normal text-foreground-muted/60 transition-colors duration-200 group-hover:text-foreground-muted">
               {entry.description}
             </span>
           </div>
-        </motion.div>
+        </motion.article>
       ))}
 
-      {/* Rest — hover list with dot leaders */}
+      {/* ── Rest — hover list with dot leaders ── */}
       {rest.length > 0 && (
         <LayoutGroup>
-          <ol className="flex flex-col list-none m-0 p-0">
+          <ol className="flex flex-col list-none m-0 p-0 mt-3">
             {rest.map((entry, i) => (
               <motion.li
                 key={entry.id}
@@ -134,15 +127,16 @@ export default function Home() {
         </LayoutGroup>
       )}
 
-      {/* Footer */}
-      <footer className="flex items-center justify-between pt-8 pb-16 text-foreground-muted">
+      {/* ── Footer — closing rhythm ── */}
+      <div className="h-px bg-border mt-16" />
+      <footer className="flex items-center justify-between py-5 text-foreground-muted">
         <span className="text-base">
           by{' '}
           <a
             href="https://github.com/ezDecode"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-foreground-secondary hover:text-foreground transition-colors duration-200"
+            className="no-underline text-foreground-secondary hover:text-foreground transition-colors duration-200"
           >
             @ezDecode
           </a>
@@ -151,7 +145,7 @@ export default function Home() {
           href="https://github.com/ezDecode"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-foreground-secondary hover:text-foreground transition-colors duration-200"
+          className="no-underline text-foreground-secondary hover:text-foreground transition-colors duration-200"
         >
           GitHub
         </a>
