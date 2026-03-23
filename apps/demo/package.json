@@ -1,21 +1,17 @@
 {
-  "name": "ez.ui",
+  "name": "@ez/ui-demo",
   "version": "0.0.1",
   "private": true,
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ],
   "scripts": {
-    "dev": "next dev --dir apps/demo",
-    "build": "next build --dir apps/demo",
-    "start": "next start --dir apps/demo",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
-    "type-check": "tsc --noEmit",
-    "storybook": "pnpm --filter @ez/ui-components storybook"
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@ez/ui-components": "workspace:*",
     "clsx": "^2.1.1",
     "geist": "^1.7.0",
     "motion": "^12.34.3",

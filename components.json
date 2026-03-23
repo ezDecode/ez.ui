@@ -16,5 +16,6 @@
     "utils": "@/lib/utils",
     "ui": "@/components/ui",
     "lib": "@/lib"
-  }
+  },
+  "url": "https://raw.githubusercontent.com/ezDecode/ez.ui/main/packages/components"
 }
