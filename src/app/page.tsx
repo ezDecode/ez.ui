@@ -17,7 +17,7 @@ export default function Home() {
     <div className="flex flex-col">
       {/* ── Hero pill ── */}
       <header>
-        <span className="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-neutral-800/60 text-[0.8125rem] sm:text-sm font-medium font-[family-name:var(--font-components)] text-foreground-secondary leading-none whitespace-nowrap">
+        <span className="inline-flex items-center justify-center px-2 py-1.5 rounded-full bg-neutral-800/60 text-[0.8125rem] sm:text-sm font-medium font-[family-name:var(--font-components)] text-foreground-secondary leading-none whitespace-nowrap">
           Animated React Components
         </span>
       </header>
