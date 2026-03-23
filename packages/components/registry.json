@@ -1,67 +1,47 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "ez-ui",
-  "homepage": "https://github.com/ez-ui/ez.ui",
+  "homepage": "https://github.com/ezDecode/ez.ui",
   "items": [
     {
       "name": "stamp-collection",
-      "type": "registry:component",
+      "type": "registry:block",
       "title": "Stamp Collection",
       "description": "Interactive stamp deck with hover physics and spring-based motion",
       "dependencies": ["motion", "next", "react"],
-      "registryDependencies": [],
       "files": [
         {
-          "path": "components/ui/stamp-collection.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "components/ui/assets/stamp_01.webp",
-          "type": "registry:asset"
-        },
-        {
-          "path": "components/ui/assets/stamp_02.webp",
-          "type": "registry:asset"
-        },
-        {
-          "path": "components/ui/assets/stamp_03.webp",
-          "type": "registry:asset"
-        },
-        {
-          "path": "components/ui/assets/stamp_04.webp",
-          "type": "registry:asset"
-        },
-        {
-          "path": "components/ui/assets/stamp_05.webp",
-          "type": "registry:asset"
+          "type": "registry:component",
+          "path": "registry/new-york/stamp-collection.tsx",
+          "target": "components/ui/stamp-collection.tsx"
         }
       ]
     },
     {
       "name": "preview",
-      "type": "registry:component",
+      "type": "registry:block",
       "title": "Preview",
       "description": "Component preview wrapper with background options",
       "dependencies": ["react"],
-      "registryDependencies": [],
       "files": [
         {
-          "path": "components/ui/preview.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "path": "registry/new-york/preview.tsx",
+          "target": "components/ui/preview.tsx"
         }
       ]
     },
     {
       "name": "animate-in",
-      "type": "registry:component",
+      "type": "registry:block",
       "title": "AnimateIn",
       "description": "Fade-in animation wrapper component with spring easing",
       "dependencies": ["motion", "react"],
-      "registryDependencies": [],
       "files": [
         {
-          "path": "components/ui/animate-in.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "path": "registry/new-york/animate-in.tsx",
+          "target": "components/ui/animate-in.tsx"
         }
       ]
     }

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "preview",
+  "type": "registry:block",
+  "title": "Preview",
+  "description": "Component preview wrapper with background options",
+  "dependencies": ["react"],
+  "files": [
+    {
+      "type": "registry:component",
+      "path": "registry/new-york/preview.tsx",
+      "target": "components/ui/preview.tsx"
+    }
+  ]
+}

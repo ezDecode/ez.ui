@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stamp-collection",
+  "type": "registry:block",
+  "title": "Stamp Collection",
+  "description": "Interactive stamp deck with hover physics and spring-based motion",
+  "dependencies": ["motion", "next", "react"],
+  "files": [
+    {
+      "type": "registry:component",
+      "path": "registry/new-york/stamp-collection.tsx",
+      "target": "components/ui/stamp-collection.tsx"
+    }
+  ]
+}
