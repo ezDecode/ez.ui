@@ -52,7 +52,7 @@ export default function Home() {
                   y: { duration: 0.4, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] },
                 }
           }
-          className="group flex flex-col overflow-hidden rounded-xl"
+          className="group flex flex-col overflow-hidden rounded-[var(--radius-md)]"
         >
           <div className="relative flex items-center justify-center p-6 sm:p-8 bg-neutral-800/40">
             {entry.Section}
