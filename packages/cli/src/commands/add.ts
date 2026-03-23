@@ -3,7 +3,6 @@ import prompts from 'prompts'
 import chalk from 'chalk'
 import { resolveConfig, resolveRegistryUrl } from '../utils/config.js'
 import { fetchRegistry, type RegistryItem } from '../utils/registry.js'
-import { transformImports, createTransformOptions } from '../utils/transform.js'
 
 export const add = new Command()
   .name('add')
@@ -12,12 +11,11 @@ export const add = new Command()
   .option('-y, --yes', 'skip confirmation prompt', false)
   .option('-o, --overwrite', 'overwrite existing files', false)
   .option('-a, --all', 'add all components', false)
-  .option('-r, --registry <name>', 'registry to use')
   .action(async (components: string[], opts) => {
     try {
       const cwd = process.cwd()
       const config = await resolveConfig(cwd)
-      const registryUrl = resolveRegistryUrl(config, opts.registry)
+      const registryUrl = resolveRegistryUrl(config)
 
       console.log(chalk.cyan(`\n  Using registry: ${registryUrl}\n`))
 
@@ -38,29 +36,29 @@ export const add = new Command()
         process.exit(1)
       }
 
-      const componentsDir = config.aliases.ui || 'components/ui'
-      const transformOptions = createTransformOptions(config)
-
       for (const name of toAdd) {
         const item = registry.items.find(i => i.name === name)!
         console.log(chalk.cyan(`\n  Adding ${item.title}...`))
 
         for (const file of item.files) {
-          if (file.type === 'registry:component' || file.type === 'registry:ui') {
+          if (file.type === 'registry:component' || file.type === 'registry:block') {
             const fileUrl = `${registryUrl}/${file.path}`
             const code = await downloadFile(fileUrl)
-            const transformed = transformImports(code, transformOptions)
+            const targetPath = file.target || `${config.aliases.ui}/${name}.tsx`
 
-            const targetPath = file.target ? file.target : `${componentsDir}/${name}.tsx`
-
-            await writeComponent(cwd, targetPath, transformed, opts.overwrite)
+            await writeComponent(cwd, targetPath, code, opts.overwrite)
           }
+        }
+
+        if (item.dependencies?.length) {
+          console.log(chalk.gray(`  Dependencies: ${item.dependencies.join(', ')}`))
         }
 
         console.log(chalk.green(`  ✓ ${item.title}`))
       }
 
       console.log(chalk.green('\n  Done! ✨\n'))
+      console.log('  Run `pnpm install` to install dependencies.\n')
     } catch (error: any) {
       console.error(chalk.red(`\n  Error: ${error.message}\n`))
       process.exit(1)

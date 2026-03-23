@@ -1,0 +1,20 @@
+
+> ez.ui@0.0.1 dev D:\Projects\ez.ui
+> pnpm --filter @ez/ui-demo dev
+
+
+> @ez/ui-demo@0.0.1 dev D:\Projects\ez.ui\apps\demo
+> next dev
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://10.35.11.43:3000
+
+Γ£ô Starting...
+Error: > Couldn't find any `pages` or `app` directory. Please create one under the project root
+    at ignore-listed frames
+[?25h
+D:\Projects\ez.ui\apps\demo:
+ΓÇëERR_PNPM_RECURSIVE_RUN_FIRST_FAILΓÇë @ez/ui-demo@0.0.1 dev: `next dev`
+Exit status 1
+ΓÇëELIFECYCLEΓÇë Command failed with exit code 1.
