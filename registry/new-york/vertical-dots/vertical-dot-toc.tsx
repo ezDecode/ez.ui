@@ -65,7 +65,7 @@ export function VerticalDotToc({
     <MotionConfig transition={{ type: 'spring', duration: 0.4, bounce: 0 }}>
       <div
         className={cn(
-          'flex items-start gap-4 rounded-sm p-4 transition-colors duration-500',
+          'flex items-start gap-4 rounded-sm p-4 w-[20rem] transition-colors duration-500',
           'bg-background border border-border',
           className
         )}
