@@ -234,7 +234,7 @@ const StampCollection = () => {
           isAnythingSelected ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'
         }`}
       >
-        <p className="text-xl text-foreground-secondary font-semibold tracking-tight text-center">
+        <p className="text-xl text-foreground-secondary font-serif text-center">
           Subscribe to the newsletter!
         </p>
         <form className="relative w-full group" onSubmit={handleSubmit} noValidate>

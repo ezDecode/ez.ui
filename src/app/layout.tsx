@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 
@@ -25,17 +25,28 @@ const louize = localFont({
 export const metadata: Metadata = {
   title: 'ez.ui — Animated React Components',
   description:
-    'Animated React component library by @ezDecode, extracted from creativesky.me. Built with Tailwind CSS v4, Motion, and OKLCH colors.',
+    'A collection of refined, purposeful animations and interactive components built with Motion.',
+}
+
+export const viewport: Viewport = {
+  maximumScale: 1,
+  colorScheme: 'dark',
+  themeColor: 'oklch(19.8% 0 0)',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${louize.variable} dark`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${louize.variable} overflow-x-hidden touch-manipulation`}
+    >
       <body
-        className="min-h-screen antialiased font-sans bg-background text-foreground"
+        className="w-full min-h-dvh relative font-sans text-base leading-relaxed bg-background text-foreground font-normal antialiased tracking-tight [text-rendering:optimizeLegibility] [-webkit-tap-highlight-color:transparent] selection:bg-accent-subtle selection:text-accent"
         suppressHydrationWarning
       >
-        {children}
+        <main className="relative mx-auto w-full max-w-content px-6 sm:px-8 lg:px-0 pt-16 sm:pt-20 pb-24">
+          {children}
+        </main>
       </body>
     </html>
   )
