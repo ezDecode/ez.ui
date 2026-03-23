@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react'
-import { motion, AnimatePresence, LayoutGroup } from 'motion/react'
+import { motion, LayoutGroup } from 'motion/react'
 import type { MouseEvent } from 'react'
 import { cn } from '@/lib/utils'
 import { useSectionProgress } from '@/hooks/use-section-progress'
@@ -24,7 +24,6 @@ export function SegmentedToc({
 }: SegmentedTocProps) {
   const sectionIds = useMemo(() => items.map(item => item.id), [items])
   const progressMap = useSectionProgress(sectionIds)
-  const [hoveredId, setHoveredId] = useState<string | null>(null)
   const [internalActiveId, setInternalActiveId] = useState<string | null>(null)
 
   // Derived active ID prioritized: External Prop > Manual Click > Scroll Heuristic
@@ -87,15 +86,13 @@ export function SegmentedToc({
       />
 
       <LayoutGroup id="segmented-toc-layout">
-        <ul className="space-y-1 mt-5 relative" onMouseLeave={() => setHoveredId(null)}>
+        <ul className="space-y-1 mt-5 relative">
           {items.map((item, index) => (
             <TocLink
               key={item.id}
               item={item}
               index={index}
               isActive={index === activeIndex}
-              isHovered={hoveredId === item.id}
-              onHover={() => setHoveredId(item.id)}
               onClick={() => handleItemClick(item.id)}
             />
           ))}
@@ -109,15 +106,11 @@ function TocLink({
   item,
   index,
   isActive,
-  isHovered,
-  onHover,
   onClick,
 }: {
   item: TocItem
   index: number
   isActive: boolean
-  isHovered: boolean
-  onHover: () => void
   onClick?: () => void
 }) {
   const number = String(index + 1).padStart(2, '0')
@@ -125,36 +118,21 @@ function TocLink({
   return (
     <motion.li
       className="relative rounded-sm"
-      onMouseEnter={onHover}
-      onFocus={onHover}
       animate={{ opacity: isActive ? 1 : 0.6 }}
       transition={{ type: 'spring', stiffness: 300, damping: 25 }}
     >
-      <AnimatePresence>
-        {isHovered && (
-          <motion.div
-            layoutId="segmented-toc-hover-pill"
-            className="absolute inset-0 bg-neutral-800/40 rounded-sm -z-10"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 30, mass: 0.8 }}
-          />
-        )}
-      </AnimatePresence>
-
       <motion.a
         href={`#${item.id}`}
         onClick={(e: MouseEvent<HTMLAnchorElement>) => {
           e.preventDefault()
           if (onClick) onClick()
         }}
-        whileTap={{ scale: 0.98 }}
+        whileTap={{ scale: 0.96, x: -2 }}
         className="flex items-baseline gap-3 text-xs font-mono uppercase tracking-wide leading-tight px-3 py-2 outline-none rounded-sm focus-visible:ring-2 focus-visible:ring-neutral-400 no-underline"
         initial={false}
         animate={{
           color: isActive ? 'var(--color-foreground)' : 'var(--color-foreground-muted)',
-          x: isActive ? 4 : 0,
+          x: isActive ? 8 : 0,
         }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
       >
