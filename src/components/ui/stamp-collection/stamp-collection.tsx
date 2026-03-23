@@ -187,7 +187,7 @@ const StampCollection = () => {
 
       {/* Description */}
       <p
-        className={`text-sm font-[family-name:var(--font-components)] text-foreground-muted text-center max-w-[320px] sm:max-w-[360px] transition-all duration-500 ease-in-out ${
+        className={`text-sm font-[family-name:var(--font-components)] font-light leading-tight text-foreground-muted/80 text-center max-w-[320px] sm:max-w-[360px] transition-all duration-500 ease-in-out ${
           isAnythingSelected ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'
         }`}
       >

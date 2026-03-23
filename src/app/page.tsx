@@ -1,6 +1,7 @@
 'use client'
 
 import { registry } from '@/components/registry'
+import { CopyButton } from '@/components/ui/copy-button'
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from 'motion/react'
 import { useState } from 'react'
 
@@ -57,13 +58,13 @@ export default function Home() {
           <div className="relative flex items-center justify-center p-6 sm:p-8 bg-neutral-800/40">
             {entry.Section}
           </div>
-          <div className="flex items-baseline justify-between gap-3 px-4 py-2.5 border-t border-neutral-700/50 bg-neutral-800/25">
-            <span className="text-base font-medium text-foreground-secondary/70 transition-colors duration-200 group-hover:text-foreground-secondary truncate">
-              {entry.name}
-            </span>
-            <span className="shrink-0 text-base font-normal text-foreground-muted/60 transition-colors duration-200 group-hover:text-foreground-muted">
-              {entry.description}
-            </span>
+          <div className="flex items-center justify-between gap-4 px-3.5 py-2 border-t border-neutral-700/50 bg-neutral-800/25">
+            <div className="flex items-center gap-3 min-w-0">
+              <span className="text-sm font-medium tracking-tight text-foreground/80 transition-colors duration-200 group-hover:text-foreground truncate">
+                {entry.name}
+              </span>
+            </div>
+            <CopyButton command={entry.command} />
           </div>
         </motion.article>
       ))}
@@ -94,9 +95,8 @@ export default function Home() {
                       }
                 }
               >
-                <button
-                  type="button"
-                  className="group relative flex items-baseline gap-4 w-full text-left -mx-2 px-2 py-1.5 leading-tight rounded-md transition-colors duration-200 focus-visible:bg-accent-subtle focus-visible:outline-none"
+                <div
+                  className="group relative flex items-center gap-4 w-full text-left -mx-2 px-2 py-1.5 leading-tight rounded-md transition-colors duration-200"
                   onMouseEnter={() => setHoveredId(entry.id)}
                   onMouseLeave={() => setHoveredId(prev => (prev === entry.id ? null : prev))}
                 >
@@ -111,17 +111,23 @@ export default function Home() {
                       )}
                     </span>
                   )}
-                  <span className="block shrink-0 min-w-0 text-base font-normal text-foreground-secondary transition-colors duration-300 group-hover:text-foreground truncate max-w-[60%] sm:max-w-none">
+                  <span className="block shrink-0 min-w-0 text-sm font-normal text-foreground-secondary/80 transition-colors duration-300 group-hover:text-foreground truncate max-w-[30%] sm:max-w-none">
                     {entry.name}
                   </span>
-                  <span
-                    className='h-[1em] flex-1 overflow-hidden text-base tracking-[6px] text-foreground-secondary/55 font-light leading-none transition-colors duration-300 after:content-["······································································"] group-hover:text-foreground/70'
-                    aria-hidden="true"
-                  />
-                  <span className="shrink-0 text-base font-normal text-foreground-muted transition-colors duration-300 group-hover:text-foreground-secondary truncate max-w-[40%] sm:max-w-none text-right">
+                  <span className="shrink-0 text-xs font-normal text-foreground-muted/40 transition-colors duration-300 group-hover:text-foreground-muted/60 truncate max-w-[40%] sm:max-w-none">
                     {entry.description}
                   </span>
-                </button>
+                  <span
+                    className='h-[1em] flex-1 overflow-hidden text-base tracking-[6px] text-foreground-muted/10 font-light leading-none transition-colors duration-300 after:content-["······································································"] group-hover:text-foreground-muted/20'
+                    aria-hidden="true"
+                  />
+                  <div className="flex items-center gap-2 shrink-0">
+                    <CopyButton
+                      command={entry.command}
+                      className="opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity duration-200"
+                    />
+                  </div>
+                </div>
               </motion.li>
             ))}
           </ol>
@@ -143,7 +149,7 @@ export default function Home() {
           </a>
         </span>
         <a
-          href="https://github.com/ezDecode"
+          href="https://github.com/ezDecode/ez.ui"
           target="_blank"
           rel="noopener noreferrer"
           className="no-underline text-foreground-secondary hover:text-foreground transition-colors duration-200"
