@@ -28,7 +28,7 @@ export default function ComponentsPage() {
       <div className="flex flex-col gap-6 mt-6">
         {registry.map((entry, index) => (
           <AnimateIn key={entry.id} delay={0.06 * (index + 1)}>
-            <article className="group flex flex-col overflow-hidden rounded-lg">
+            <article className="group flex flex-col overflow-hidden rounded-xl">
               <div className="relative flex items-center justify-center p-6 sm:p-8 bg-neutral-800/40">
                 {entry.Section}
               </div>

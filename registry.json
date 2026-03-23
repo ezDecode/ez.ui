@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "ez-ui",
+  "homepage": "https://github.com/ezDecode/ez.ui",
+  "items": [
+    {
+      "name": "stamp-collection",
+      "description": "A component from ez-ui",
+      "type": "registry:block",
+      "dependencies": ["motion", "next", "react"],
+      "files": [
+        {
+          "type": "registry:component",
+          "path": "registry/new-york/stamp-collection/stamp-collection.tsx",
+          "target": "components/ui/stamp-collection/stamp-collection.tsx"
+        },
+        {
+          "type": "registry:file",
+          "path": "registry/new-york/stamp-collection/assets/stamp_01.webp",
+          "target": "components/ui/stamp-collection/assets/stamp_01.webp"
+        },
+        {
+          "type": "registry:file",
+          "path": "registry/new-york/stamp-collection/assets/stamp_02.webp",
+          "target": "components/ui/stamp-collection/assets/stamp_02.webp"
+        },
+        {
+          "type": "registry:file",
+          "path": "registry/new-york/stamp-collection/assets/stamp_03.webp",
+          "target": "components/ui/stamp-collection/assets/stamp_03.webp"
+        },
+        {
+          "type": "registry:file",
+          "path": "registry/new-york/stamp-collection/assets/stamp_04.webp",
+          "target": "components/ui/stamp-collection/assets/stamp_04.webp"
+        },
+        {
+          "type": "registry:file",
+          "path": "registry/new-york/stamp-collection/assets/stamp_05.webp",
+          "target": "components/ui/stamp-collection/assets/stamp_05.webp"
+        }
+      ]
+    }
+  ]
+}

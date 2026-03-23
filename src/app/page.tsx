@@ -1,22 +1,24 @@
 'use client'
 
 import { registry } from '@/components/registry'
-import { Preview, ComponentCard } from '@/components/ui/preview'
-import { motion, useReducedMotion } from 'motion/react'
+import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from 'motion/react'
+import { useState } from 'react'
 
-const customEase = [0.22, 1, 0.36, 1] as const
+const HOVER_SPRING = { type: 'spring', stiffness: 420, damping: 32, mass: 0.7 } as const
 
 export default function Home() {
+  const [hoveredId, setHoveredId] = useState<string | null>(null)
   const prefersReducedMotion = useReducedMotion()
+
+  const featured = registry.slice(0, 1)
+  const rest = registry.slice(1)
 
   return (
     <div className="flex flex-col">
       {/* ── Hero pill ── */}
       <header>
-        <span className="inline-flex items-center justify-center px-3.5 pt-[0.3125rem] pb-[0.375rem] bg-neutral-800/60 leading-none rounded-full">
-          <span className="text-[0.8125rem] sm:text-sm font-medium font-[family-name:var(--font-components)] text-foreground-secondary leading-none whitespace-nowrap">
-            Animated React Components
-          </span>
+        <span className="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-neutral-800/60 text-[0.8125rem] sm:text-sm font-medium font-[family-name:var(--font-components)] text-foreground-secondary leading-none whitespace-nowrap">
+          Animated React Components
         </span>
       </header>
 
@@ -25,10 +27,10 @@ export default function Home() {
         Copy, adapt, and ship.
       </p>
 
-      {/* ── Divider ── */}
+      {/* ── Divider — generous breathing before content ── */}
       <div className="h-px bg-border mt-10" />
 
-      {/* ── Section heading ── */}
+      {/* ── Section heading — tight to content below ── */}
       <div className="flex items-center justify-between gap-3 mt-5 mb-4">
         <h2 className="text-base font-semibold text-foreground">Components</h2>
         <span className="text-base tabular-nums text-foreground-muted">
@@ -36,35 +38,97 @@ export default function Home() {
         </span>
       </div>
 
-      {/* ── Component grid ── */}
-      <div className="grid gap-4">
-        {registry.map((entry, i) => (
-          <motion.div
-            key={entry.id}
-            initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
-            animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-            transition={
-              prefersReducedMotion
-                ? { duration: 0.15 }
-                : {
-                    opacity: { duration: 0.3, delay: i * 0.06, ease: customEase },
-                    y: { duration: 0.4, delay: i * 0.06, ease: customEase },
-                  }
-            }
-          >
-            <ComponentCard
-              id={entry.id}
-              name={entry.name}
-              description={entry.description}
-              index={i}
-            >
-              {entry.Section}
-            </ComponentCard>
-          </motion.div>
-        ))}
-      </div>
+      {/* ── Featured component — large preview ── */}
+      {featured.map((entry, i) => (
+        <motion.article
+          key={entry.id}
+          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
+          animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+          transition={
+            prefersReducedMotion
+              ? { duration: 0.15 }
+              : {
+                  opacity: { duration: 0.3, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] },
+                  y: { duration: 0.4, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] },
+                }
+          }
+          className="group flex flex-col overflow-hidden rounded-xl"
+        >
+          <div className="relative flex items-center justify-center p-6 sm:p-8 bg-neutral-800/40">
+            {entry.Section}
+          </div>
+          <div className="flex items-baseline justify-between gap-3 px-4 py-2.5 border-t border-neutral-700/50 bg-neutral-800/25">
+            <span className="text-base font-medium text-foreground-secondary/70 transition-colors duration-200 group-hover:text-foreground-secondary truncate">
+              {entry.name}
+            </span>
+            <span className="shrink-0 text-base font-normal text-foreground-muted/60 transition-colors duration-200 group-hover:text-foreground-muted">
+              {entry.description}
+            </span>
+          </div>
+        </motion.article>
+      ))}
 
-      {/* ── Footer ── */}
+      {/* ── Rest — hover list with dot leaders ── */}
+      {rest.length > 0 && (
+        <LayoutGroup>
+          <ol className="flex flex-col list-none m-0 p-0 mt-3">
+            {rest.map((entry, i) => (
+              <motion.li
+                key={entry.id}
+                initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 6 }}
+                animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                transition={
+                  prefersReducedMotion
+                    ? { duration: 0.15 }
+                    : {
+                        opacity: {
+                          duration: 0.3,
+                          delay: (featured.length + i) * 0.06,
+                          ease: [0.22, 1, 0.36, 1],
+                        },
+                        y: {
+                          duration: 0.4,
+                          delay: (featured.length + i) * 0.06,
+                          ease: [0.22, 1, 0.36, 1],
+                        },
+                      }
+                }
+              >
+                <button
+                  type="button"
+                  className="group relative flex items-baseline gap-4 w-full text-left -mx-2 px-2 py-1.5 leading-tight rounded-md transition-colors duration-200 focus-visible:bg-accent-subtle focus-visible:outline-none"
+                  onMouseEnter={() => setHoveredId(entry.id)}
+                  onMouseLeave={() => setHoveredId(prev => (prev === entry.id ? null : prev))}
+                >
+                  {!prefersReducedMotion && (
+                    <span className="pointer-events-none absolute inset-0 rounded-md">
+                      {hoveredId === entry.id && (
+                        <motion.span
+                          layoutId="component-hover"
+                          className="absolute inset-x-0 inset-y-0.5 rounded-md bg-accent-subtle"
+                          transition={HOVER_SPRING}
+                        />
+                      )}
+                    </span>
+                  )}
+                  <span className="block shrink-0 min-w-0 text-base font-normal text-foreground-secondary transition-colors duration-300 group-hover:text-foreground truncate max-w-[60%] sm:max-w-none">
+                    {entry.name}
+                  </span>
+                  <span
+                    className='h-[1em] flex-1 overflow-hidden text-base tracking-[6px] text-foreground-secondary/55 font-light leading-none transition-colors duration-300 after:content-["······································································"] group-hover:text-foreground/70'
+                    aria-hidden="true"
+                  />
+                  <span className="shrink-0 text-base font-normal text-foreground-muted transition-colors duration-300 group-hover:text-foreground-secondary truncate max-w-[40%] sm:max-w-none text-right">
+                    {entry.description}
+                  </span>
+                </button>
+              </motion.li>
+            ))}
+          </ol>
+        </LayoutGroup>
+      )}
+
+      {/* ── Footer — closing rhythm ── */}
       <div className="h-px bg-border mt-16" />
       <footer className="flex items-center justify-between py-5 text-foreground-muted">
         <span className="text-base">

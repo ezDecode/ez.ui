@@ -9,6 +9,9 @@ import stamp03 from './assets/stamp_03.webp'
 import stamp04 from './assets/stamp_04.webp'
 import stamp05 from './assets/stamp_05.webp'
 
+// Inspiration: https://omou.app/
+
+// 1. Define the persistent Stamp data (Identity)
 const STAMP_ITEMS = [
   { id: 'stamp-1', src: stamp01, label: 'Stamp 1' },
   { id: 'stamp-2', src: stamp02, label: 'Stamp 2' },
@@ -17,12 +20,14 @@ const STAMP_ITEMS = [
   { id: 'stamp-5', src: stamp05, label: 'Stamp 5' },
 ]
 
+// 2. Define the fixed Visual Slots (Layout)
+// Re-ordered so index 4 is the visual center for both fanned and stacked states
 const SLOTS = [
-  { fanned: { x: -148, y: 10, rotate: -18 }, stacked: { x: -8, y: 2, rotate: -9 } },
-  { fanned: { x: 148, y: 10, rotate: 18 }, stacked: { x: 8, y: 2, rotate: 9 } },
-  { fanned: { x: -74, y: -3, rotate: -9 }, stacked: { x: -4, y: -1, rotate: -5 } },
-  { fanned: { x: 74, y: -3, rotate: 9 }, stacked: { x: 4, y: -1, rotate: 5 } },
-  { fanned: { x: 0, y: -10, rotate: 0 }, stacked: { x: 0, y: 0, rotate: 0 } },
+  { fanned: { x: -148, y: 10, rotate: -18 }, stacked: { x: -8, y: 2, rotate: -9 } }, // 0: Far Left
+  { fanned: { x: 148, y: 10, rotate: 18 }, stacked: { x: 8, y: 2, rotate: 9 } }, // 1: Far Right
+  { fanned: { x: -74, y: -3, rotate: -9 }, stacked: { x: -4, y: -1, rotate: -5 } }, // 2: Mid Left
+  { fanned: { x: 74, y: -3, rotate: 9 }, stacked: { x: 4, y: -1, rotate: 5 } }, // 3: Mid Right
+  { fanned: { x: 0, y: -10, rotate: 0 }, stacked: { x: 0, y: 0, rotate: 0 } }, // 4: Center
 ]
 
 const TRANSITION = {
@@ -39,12 +44,13 @@ const StampCollection = () => {
   const [isHovered, setIsHovered] = useState(false)
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
+  // Define initial layout order: Stamp 3 (index 2) is the visual center
   const INITIAL_STAMPS = [
-    STAMP_ITEMS[0],
-    STAMP_ITEMS[1],
-    STAMP_ITEMS[3],
-    STAMP_ITEMS[4],
-    STAMP_ITEMS[2],
+    STAMP_ITEMS[0], // Stamp 1 -> Far Left
+    STAMP_ITEMS[1], // Stamp 2 -> Far Right
+    STAMP_ITEMS[3], // Stamp 4 -> Mid Left
+    STAMP_ITEMS[4], // Stamp 5 -> Mid Right
+    STAMP_ITEMS[2], // Stamp 3 -> Center (Top of stack)
   ]
 
   const [stackOrder, setStackOrder] = useState(() => INITIAL_STAMPS.map(item => item.id))
@@ -57,6 +63,7 @@ const StampCollection = () => {
 
   useEffect(() => {
     setMounted(true)
+    // Trigger "hover" state on mount to show scattering animation
     setIsHovered(true)
     const timer = setTimeout(() => {
       setIsHovered(false)
@@ -65,7 +72,7 @@ const StampCollection = () => {
   }, [])
 
   const handlePointerEnter = () => {
-    if (selectedId) return
+    if (selectedId) return // Don't randomize while focused
 
     const shuffledStamps = [...STAMP_ITEMS]
     for (let i = shuffledStamps.length - 1; i > 0; i--) {
@@ -84,6 +91,7 @@ const StampCollection = () => {
 
   const handleStampClick = (id: string) => {
     if (selectedId !== id) {
+      // Bring to front of stack when selected
       setStackOrder(prevOrder => [...prevOrder.filter(itemId => itemId !== id), id])
     }
     setSelectedId(selectedId === id ? null : id)
@@ -93,6 +101,7 @@ const StampCollection = () => {
 
   return (
     <div className="relative flex flex-col items-center justify-center w-full h-full min-h-[340px] sm:min-h-[400px] py-8 gap-10">
+      {/* Background Overlay for Focus Mode */}
       <AnimatePresence>
         {selectedId && (
           <motion.div
@@ -114,6 +123,7 @@ const StampCollection = () => {
           const isSelected = selectedId === item.id
           const isDimmed = selectedId !== null && !isSelected
 
+          // Determine the visual state
           let targetX = mounted && isHovered ? item.slot.fanned.x : item.slot.stacked.x
           let targetY = mounted && isHovered ? item.slot.fanned.y : item.slot.stacked.y
           let targetRotate =
@@ -122,15 +132,18 @@ const StampCollection = () => {
           const zIndex = stackOrder.indexOf(item.id) + 1
           const slotZ = SLOTS.indexOf(item.slot) + 1
 
+          // Use slot-based zIndex when scattering on hover (center is highest: 5)
+          // Otherwise use the persistent stack order
           let targetZ = mounted && isHovered && !selectedId ? slotZ : zIndex
           let targetScale = 1
 
+          // Override if something is focused
           if (mounted && isSelected) {
             targetX = 0
             targetY = 0
             targetRotate = 0
             targetZ = 100
-            targetScale = 1.8
+            targetScale = 1.8 // Pop it up
           }
 
           return (
@@ -172,6 +185,7 @@ const StampCollection = () => {
         })}
       </div>
 
+      {/* Description */}
       <p
         className={`text-sm font-[family-name:var(--font-components)] text-foreground-muted text-center max-w-[320px] sm:max-w-[360px] transition-all duration-500 ease-in-out ${
           isAnythingSelected ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'
