@@ -63,7 +63,7 @@ export function ThemeSwitcher() {
   return (
     <div
       className={cn(
-        'relative flex items-center gap-0.5 p-1 w-fit rounded-sm transition-colors duration-500',
+        'relative flex items-center gap-1 p-1 w-fit rounded-sm transition-colors duration-500',
         'bg-neutral-800 border border-border shadow-sm'
       )}
     >
@@ -75,22 +75,29 @@ export function ThemeSwitcher() {
           <motion.button
             key={mode.value}
             onClick={() => setTheme(mode.value)}
-            whileTap={{ scale: 0.92 }}
+            whileTap={{ scale: 0.94 }}
             className={cn(
-              'relative z-10 flex items-center justify-center gap-1.5 rounded-sm cursor-pointer transition-colors duration-200 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-neutral-800',
+              'relative z-10 flex items-center justify-center gap-2 cursor-pointer transition-colors duration-200 outline-none focus-visible:ring-1 focus-visible:ring-neutral-400',
               isActive ? 'text-background' : 'text-foreground-muted hover:text-foreground',
-              isActive ? 'px-3 py-1.5' : 'px-2 py-1.5'
+              'px-2.5 py-1.5'
             )}
+            style={{
+              // Mathematically nested radius: R_inner = R_outer - Padding
+              borderRadius: 'calc(var(--radius-sm) - var(--spacing-1))',
+            }}
           >
             {/* Sliding pill */}
             {isActive && (
               <motion.div
                 layoutId="theme-pill"
-                className="absolute inset-0 rounded-sm bg-foreground -z-10 shadow-sm"
+                className="absolute inset-0 bg-foreground -z-10 shadow-sm"
+                style={{
+                  borderRadius: 'inherit',
+                }}
                 transition={{
                   type: 'spring',
                   stiffness: 400,
-                  damping: 25,
+                  damping: 30,
                   mass: 0.8,
                 }}
               />
