@@ -40,18 +40,18 @@ const FOCUS_TRANSITION = {
   ease: [0.32, 0.72, 0, 1],
 } as const
 
+// Define initial layout order: Stamp 3 (index 2) is the visual center
+const INITIAL_STAMPS = [
+  STAMP_ITEMS[0], // Stamp 1 -> Far Left
+  STAMP_ITEMS[1], // Stamp 2 -> Far Right
+  STAMP_ITEMS[3], // Stamp 4 -> Mid Left
+  STAMP_ITEMS[4], // Stamp 5 -> Mid Right
+  STAMP_ITEMS[2], // Stamp 3 -> Center (Top of stack)
+]
+
 const StampCollection = () => {
   const [isHovered, setIsHovered] = useState(false)
   const [selectedId, setSelectedId] = useState<string | null>(null)
-
-  // Define initial layout order: Stamp 3 (index 2) is the visual center
-  const INITIAL_STAMPS = [
-    STAMP_ITEMS[0], // Stamp 1 -> Far Left
-    STAMP_ITEMS[1], // Stamp 2 -> Far Right
-    STAMP_ITEMS[3], // Stamp 4 -> Mid Left
-    STAMP_ITEMS[4], // Stamp 5 -> Mid Right
-    STAMP_ITEMS[2], // Stamp 3 -> Center (Top of stack)
-  ]
 
   const [stackOrder, setStackOrder] = useState(() => INITIAL_STAMPS.map(item => item.id))
 
@@ -178,6 +178,8 @@ const StampCollection = () => {
               <Image
                 src={item.src}
                 alt={item.label}
+                priority
+                sizes="(max-width: 640px) 118px, 136px"
                 className="h-[118px] w-auto object-contain sm:h-[136px]"
               />
             </motion.button>

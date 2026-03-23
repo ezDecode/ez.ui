@@ -4,6 +4,24 @@
   "homepage": "https://github.com/ezDecode/ez.ui",
   "items": [
     {
+      "name": "login-button",
+      "description": "A component from ez-ui",
+      "type": "registry:block",
+      "dependencies": ["motion", "react"],
+      "files": [
+        {
+          "type": "registry:component",
+          "path": "registry/new-york/login-button/index.ts",
+          "target": "components/ui/login-button/index.ts"
+        },
+        {
+          "type": "registry:component",
+          "path": "registry/new-york/login-button/login-button.tsx",
+          "target": "components/ui/login-button/login-button.tsx"
+        }
+      ]
+    },
+    {
       "name": "stamp-collection",
       "description": "A component from ez-ui",
       "type": "registry:block",
@@ -38,6 +56,85 @@
           "type": "registry:file",
           "path": "registry/new-york/stamp-collection/assets/stamp_05.webp",
           "target": "components/ui/stamp-collection/assets/stamp_05.webp"
+        }
+      ]
+    },
+    {
+      "name": "theme-switcher",
+      "description": "A component from ez-ui",
+      "type": "registry:block",
+      "dependencies": ["react", "motion"],
+      "files": [
+        {
+          "type": "registry:component",
+          "path": "registry/new-york/theme-switcher/index.ts",
+          "target": "components/ui/theme-switcher/index.ts"
+        },
+        {
+          "type": "registry:component",
+          "path": "registry/new-york/theme-switcher/theme-context.tsx",
+          "target": "components/ui/theme-switcher/theme-context.tsx"
+        },
+        {
+          "type": "registry:component",
+          "path": "registry/new-york/theme-switcher/theme-switcher.tsx",
+          "target": "components/ui/theme-switcher/theme-switcher.tsx"
+        }
+      ]
+    },
+    {
+      "name": "toc",
+      "description": "A component from ez-ui",
+      "type": "registry:block",
+      "dependencies": ["motion", "next", "react"],
+      "files": [
+        {
+          "type": "registry:component",
+          "path": "registry/new-york/toc/animated-toc.tsx",
+          "target": "components/ui/toc/animated-toc.tsx"
+        },
+        {
+          "type": "registry:component",
+          "path": "registry/new-york/toc/demo-helpers.tsx",
+          "target": "components/ui/toc/demo-helpers.tsx"
+        },
+        {
+          "type": "registry:component",
+          "path": "registry/new-york/toc/index.ts",
+          "target": "components/ui/toc/index.ts"
+        },
+        {
+          "type": "registry:component",
+          "path": "registry/new-york/toc/segmented-progress-bar.tsx",
+          "target": "components/ui/toc/segmented-progress-bar.tsx"
+        },
+        {
+          "type": "registry:component",
+          "path": "registry/new-york/toc/segmented-toc.tsx",
+          "target": "components/ui/toc/segmented-toc.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vertical-dots",
+      "description": "A component from ez-ui",
+      "type": "registry:block",
+      "dependencies": ["motion", "react", "next"],
+      "files": [
+        {
+          "type": "registry:component",
+          "path": "registry/new-york/vertical-dots/index.ts",
+          "target": "components/ui/vertical-dots/index.ts"
+        },
+        {
+          "type": "registry:component",
+          "path": "registry/new-york/vertical-dots/vertical-dot-progress.tsx",
+          "target": "components/ui/vertical-dots/vertical-dot-progress.tsx"
+        },
+        {
+          "type": "registry:component",
+          "path": "registry/new-york/vertical-dots/vertical-dot-toc.tsx",
+          "target": "components/ui/vertical-dots/vertical-dot-toc.tsx"
         }
       ]
     }

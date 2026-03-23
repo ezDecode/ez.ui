@@ -21,69 +21,21 @@ const ASSET_EXTENSIONS = [
   '.ttf',
 ]
 
-function getComponentMeta(filePath, name) {
+function getComponentMeta(filePath) {
   const content = fs.readFileSync(filePath, 'utf-8')
-  const displayName = name
-    .replace(/-([a-z])/g, (_, c) => c.toUpperCase())
-    .replace(/^[a-z]/, c => c.toUpperCase())
 
   let description = `A component from ez-ui`
   const commentMatch = content.match(/\/\/!\s*(.+)/) || content.match(/\/\*\*\s*\n\s*\*\s*(.+)/)
   if (commentMatch) description = commentMatch[1].trim()
 
-  const deps = []
-  if (content.includes('motion/react') || content.includes('framer-motion')) deps.push('motion')
-  if (content.includes('gsap')) deps.push('gsap')
-  if (content.includes('next')) deps.push('next')
-  if (content.includes('react')) deps.push('react')
+  const deps = new Set()
+  if (content.includes('motion/react') || content.includes('framer-motion')) deps.add('motion')
+  if (content.includes('gsap')) deps.add('gsap')
+  if (content.includes('next')) deps.add('next')
+  if (content.includes('react')) deps.add('react')
+  if (content.includes('lucide-react')) deps.add('lucide-react')
 
-  return { displayName, description, dependencies: deps }
-}
-
-function findComponents(dir, basePath = '') {
-  const items = []
-  const files = fs.readdirSync(dir, { withFileTypes: true })
-
-  for (const file of files) {
-    const fullPath = path.join(dir, file.name)
-    const relativePath = basePath ? `${basePath}/${file.name}` : file.name
-
-    if (file.isDirectory()) {
-      const subItems = findComponents(fullPath, relativePath)
-      items.push(...subItems)
-    } else {
-      const ext = path.extname(file.name).toLowerCase()
-      if (COMPONENT_EXTENSIONS.includes(ext)) {
-        items.push({ path: fullPath, relativePath, name: file.name })
-      }
-    }
-  }
-
-  return items
-}
-
-function findAssets(dir, componentBaseName) {
-  const assets = []
-
-  const assetsDir = path.join(dir, 'assets')
-  const searchDir = fs.existsSync(assetsDir) ? assetsDir : dir
-  const baseNameShort = componentBaseName.replace('collection', '').replace(/-/g, '')
-
-  const files = fs.readdirSync(searchDir, { withFileTypes: true })
-
-  for (const file of files) {
-    if (file.isFile()) {
-      const ext = path.extname(file.name).toLowerCase()
-      if (ASSET_EXTENSIONS.includes(ext)) {
-        const assetBase = path.basename(file.name, ext)
-        if (assetBase.startsWith(baseNameShort) || assetBase.match(/^\w+_\d/)) {
-          assets.push(file.name)
-        }
-      }
-    }
-  }
-
-  return assets
+  return { description, dependencies: Array.from(deps) }
 }
 
 function buildRegistry() {
@@ -92,40 +44,79 @@ function buildRegistry() {
     return
   }
 
-  const components = findComponents(registryDir)
+  const folders = fs
+    .readdirSync(registryDir, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name)
+
   const items = []
 
-  for (const comp of components) {
-    const componentDir = path.dirname(comp.path)
-    const componentDirRel = path.dirname(comp.relativePath)
-    const name = path.basename(comp.name, path.extname(comp.name))
-    const meta = getComponentMeta(comp.path, name)
+  for (const folder of folders) {
+    const folderPath = path.join(registryDir, folder)
+    const files = []
+    const allDeps = new Set()
+    let mainDescription = `A component from ez-ui`
 
-    const componentRelPath = `registry/new-york/${comp.relativePath}`
-    const target = `components/ui/${comp.relativePath.replace(/\.(tsx|jsx|ts|js)$/, '')}.tsx`
+    function traverse(dir, relPath = '') {
+      const entries = fs.readdirSync(dir, { withFileTypes: true })
+      for (const entry of entries) {
+        const entryPath = path.join(dir, entry.name)
+        const entryRelPath = relPath ? `${relPath}/${entry.name}` : entry.name
 
-    const item = {
-      name,
-      description: meta.description,
-      type: 'registry:block',
-      dependencies: meta.dependencies,
-      files: [{ type: 'registry:component', path: componentRelPath, target }],
+        if (entry.isDirectory()) {
+          if (entry.name !== 'assets') {
+            traverse(entryPath, entryRelPath)
+          }
+        } else {
+          const ext = path.extname(entry.name).toLowerCase()
+          if (COMPONENT_EXTENSIONS.includes(ext)) {
+            const { description, dependencies } = getComponentMeta(entryPath)
+            if (
+              entry.name === `${folder}.tsx` ||
+              entry.name === 'index.ts' ||
+              entry.name === 'index.tsx'
+            ) {
+              mainDescription = description
+            }
+            dependencies.forEach(d => allDeps.add(d))
+
+            files.push({
+              type: 'registry:component',
+              path: `registry/new-york/${folder}/${entryRelPath}`,
+              target: `components/ui/${folder}/${entryRelPath}`,
+            })
+          }
+        }
+      }
     }
 
-    const assets = findAssets(componentDir, name)
-    const assetsDir = fs.existsSync(path.join(componentDir, 'assets')) ? 'assets' : ''
-    for (const asset of assets) {
-      const assetPath = assetsDir
-        ? `${componentDirRel}/${assetsDir}/${asset}`
-        : `${componentDirRel}/${asset}`
-      item.files.push({
-        type: 'registry:file',
-        path: `registry/new-york/${assetPath}`,
-        target: `components/ui/${assetPath}`,
+    traverse(folderPath)
+
+    // Add assets
+    const assetsDir = path.join(folderPath, 'assets')
+    if (fs.existsSync(assetsDir)) {
+      const assetFiles = fs.readdirSync(assetsDir)
+      for (const asset of assetFiles) {
+        const ext = path.extname(asset).toLowerCase()
+        if (ASSET_EXTENSIONS.includes(ext)) {
+          files.push({
+            type: 'registry:file',
+            path: `registry/new-york/${folder}/assets/${asset}`,
+            target: `components/ui/${folder}/assets/${asset}`,
+          })
+        }
+      }
+    }
+
+    if (files.length > 0) {
+      items.push({
+        name: folder,
+        description: mainDescription,
+        type: 'registry:block',
+        dependencies: Array.from(allDeps),
+        files: files,
       })
     }
-
-    items.push(item)
   }
 
   const registry = {

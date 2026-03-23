@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
+import { ThemeProvider } from '@/components/ui/theme-switcher'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -20,14 +21,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       className={`${GeistMono.variable} ${GeistSans.variable} overflow-x-hidden touch-manipulation`}
+      suppressHydrationWarning
     >
-      <body
-        className="w-full min-h-dvh relative font-sans text-base bg-background text-foreground antialiased [text-rendering:optimizeLegibility] [-webkit-tap-highlight-color:transparent] selection:bg-accent-subtle selection:text-accent"
-        suppressHydrationWarning
-      >
-        <main className="relative mx-auto w-full max-w-content px-6 sm:px-8 lg:px-0 pt-16 sm:pt-20 pb-24">
-          {children}
-        </main>
+      <body className="w-full min-h-dvh relative font-sans text-base bg-background text-foreground antialiased [text-rendering:optimizeLegibility] [-webkit-tap-highlight-color:transparent] selection:bg-accent-subtle selection:text-accent">
+        <ThemeProvider>
+          <main className="relative mx-auto w-full max-w-content px-6 sm:px-8 lg:px-0 pt-16 sm:pt-20 pb-24">
+            {children}
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   )

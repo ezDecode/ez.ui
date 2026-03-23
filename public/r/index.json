@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "index",
+  "type": "registry:block",
+  "title": "index",
+  "description": "A component from ez-ui",
+  "dependencies": [],
+  "files": [
+    {
+      "path": "registry/new-york/vertical-dots/index.ts",
+      "content": "export { VerticalDotToc } from './vertical-dot-toc'\r\nexport { VerticalDotProgress } from './vertical-dot-progress'\r\n\r\nexport const metadata = {\r\n  id: 'vertical-dots',\r\n  name: 'Vertical Dot TOC',\r\n  description: 'Vertical progress dots with auto-advancing sections and blur transitions.',\r\n} as const\r\n",
+      "type": "registry:component",
+      "target": "components/ui/vertical-dots/index.tsx"
+    }
+  ]
+}

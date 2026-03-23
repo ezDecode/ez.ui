@@ -1,5 +1,13 @@
 @import 'tailwindcss';
 
+@font-face {
+  font-family: 'Iosevka';
+  src: url('../assets/IosevkaFixedCurly.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /*
   ez.ui Design System — mirrors creativesky.me
   Tailwind v4 CSS-first config with @theme
@@ -29,8 +37,8 @@
   --color-accent-subtle: oklch(91.2% 0 0 / 8%);
 
   /* ── Typography ── */
-  --font-sans: var(--font-geist-mono), 'Geist Mono', ui-monospace, monospace;
-  --font-mono: var(--font-geist-mono), 'Geist Mono', ui-monospace, monospace;
+  --font-sans: var(--font-geist-mono), 'Geist Mono', 'Iosevka', ui-monospace, monospace;
+  --font-mono: var(--font-geist-mono), 'Geist Mono', 'Iosevka', ui-monospace, monospace;
   --font-components: var(--font-geist-sans), 'Geist Sans', ui-sans-serif, system-ui, sans-serif;
 
   /* Font Weights — hierarchy: 400 body, 500 secondary emphasis, 600 headings/labels */
@@ -133,7 +141,6 @@
   *::before,
   *::after {
     border-color: var(--color-border);
-    corner-shape: superellipse(1.7);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -195,5 +202,3 @@
     opacity: 1;
   }
 }
-
-

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "demo-helpers",
+  "type": "registry:block",
+  "title": "demo-helpers",
+  "description": "A component from ez-ui",
+  "dependencies": ["react"],
+  "files": [
+    {
+      "path": "registry/new-york/toc/demo-helpers.tsx",
+      "content": "import React from 'react';\n\nexport function Section({\n  id,\n  title,\n  level = 1,\n  className,\n  children\n}: {\n  id: string;\n  title: string;\n  level?: 1 | 2;\n  className?: string;\n  children: React.ReactNode;\n}) {\n  const Tag = level === 1 ? 'h2' : 'h3';\n  const titleClass = level === 1\n    ? 'text-2xl font-bold text-white mt-16 mb-6 first:mt-0'\n    : 'text-xl font-semibold text-white/90 mt-10 mb-4';\n\n  return (\n    <section id={id} className={\\`scroll-mt-24 \\${className || ''}\\`}>\n      <Tag className={titleClass}>{title}</Tag>\n      <div className=\"space-y-4 text-gray-400 leading-relaxed\">\n        {children}\n      </div>\n    </section>\n  );\n}\n\nexport function CodeBlock({ code }: { code: string }) {\n  return (\n    <pre className=\"bg-[#1a1a1d] border border-white/5 rounded-xl p-4 overflow-x-auto my-4\">\n      <code className=\"text-sm text-indigo-300\" style={{ fontFamily: 'var(--font-mono)' }}>{code}</code>\n    </pre>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/toc/demo-helpers.tsx"
+    }
+  ]
+}
