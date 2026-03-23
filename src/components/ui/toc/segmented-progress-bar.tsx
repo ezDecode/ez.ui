@@ -22,7 +22,7 @@ const containerVariants = {
       staggerChildren: 0.05,
     },
   },
-}
+} as const
 
 const pillVariants = {
   hidden: { scale: 0, opacity: 0 },
@@ -35,7 +35,7 @@ const pillVariants = {
       damping: 20,
     },
   },
-}
+} as const
 
 export function SegmentedProgressBar({
   items,

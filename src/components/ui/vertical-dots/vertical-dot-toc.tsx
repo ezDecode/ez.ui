@@ -29,7 +29,7 @@ const textVariants = {
     filter: 'blur(4px)',
     opacity: 0,
   },
-}
+} as const
 
 export function VerticalDotToc({
   items,
