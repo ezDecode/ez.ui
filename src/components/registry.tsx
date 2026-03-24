@@ -20,14 +20,14 @@ export const registry: RegistryEntry[] = [
     name: 'Stamp Collection',
     description: 'Scatter · hover · zoom',
     Section: <StampCollection />,
-    command: 'npx shadcn@latest add @ez-pi/stamp-collection',
+    command: 'npx shadcn@latest add https://ez-ui-pi.vercel.app/r/stamp-collection.json',
   },
   {
     id: 'animated-lines',
     name: 'Animated Lines',
     description: 'Diagonal · hover · canvas',
     Section: <AnimatedLines />,
-    command: 'npx shadcn@latest add @ez-pi/animated-lines',
+    command: 'npx shadcn@latest add https://ez-ui-pi.vercel.app/r/animated-lines.json',
   },
   {
     id: 'toc',
@@ -38,14 +38,14 @@ export const registry: RegistryEntry[] = [
         <SegmentedToc items={DemoHelpers.TOC_ITEMS.slice(0, 4)} />
       </div>
     ),
-    command: 'npx shadcn@latest add @ez-pi/toc',
+    command: 'npx shadcn@latest add https://ez-ui-pi.vercel.app/r/toc.json',
   },
   {
     id: 'vertical-dots',
     name: 'Vertical Dot TOC',
     description: 'Dots · auto · advance',
     Section: <VerticalDotToc items={DemoHelpers.TOC_ITEMS.slice(0, 4)} />,
-    command: 'npx shadcn@latest add @ez-pi/vertical-dots',
+    command: 'npx shadcn@latest add https://ez-ui-pi.vercel.app/r/vertical-dots.json',
   },
 ]
 
