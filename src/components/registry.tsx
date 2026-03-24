@@ -1,6 +1,5 @@
 import { StampCollection } from '@/components/ui/stamp-collection'
-import { LoginButton } from '@/components/ui/login-button'
-import { ThemeSwitcher } from '@/components/ui/theme-switcher'
+import { AnimatedLines } from '@/components/ui/animated-lines'
 import { SegmentedToc, DemoHelpers } from '@/components/ui/toc'
 import { VerticalDotToc } from '@/components/ui/vertical-dots'
 import type { ReactNode } from 'react'
@@ -24,18 +23,11 @@ export const registry: RegistryEntry[] = [
     command: 'npx shadcn@latest add @ez-pi/stamp-collection',
   },
   {
-    id: 'login-button',
-    name: 'Login Button',
+    id: 'animated-lines',
+    name: 'Animated Lines',
     description: 'Diagonal · hover · canvas',
-    Section: <LoginButton />,
-    command: 'npx shadcn@latest add @ez-pi/login-button',
-  },
-  {
-    id: 'theme-switcher',
-    name: 'Theme Switcher',
-    description: 'Slide · pill · theme',
-    Section: <ThemeSwitcher />,
-    command: 'npx shadcn@latest add @ez-pi/theme-switcher',
+    Section: <AnimatedLines />,
+    command: 'npx shadcn@latest add @ez-pi/animated-lines',
   },
   {
     id: 'toc',

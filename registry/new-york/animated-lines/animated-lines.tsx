@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { motion, useMotionTemplate, useMotionValue, useSpring } from 'motion/react'
+import { motion, useMotionTemplate, useMotionValue } from 'motion/react'
 import { cn } from '@/lib/utils'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -58,14 +58,7 @@ function useDiagonalPattern(
 
       for (let i = -numLines; i < numLines; i++) {
         const baseX = i * lineSpacing + (offsetRef.current % lineSpacing)
-        const lineIndex = i + numLines
-        const staggerDelay = lineIndex * 12
-        const lineAge = Math.max(0, elapsed - staggerDelay)
-        const lineFadeIn = Math.min(1, lineAge / 200)
-
-        if (lineFadeIn <= 0) continue
-
-        const lineOpacity = breathe * lineFadeIn
+        const lineOpacity = breathe
 
         const x1 = rect.width / 2 + baseX + cos * diagonal
         const y1 = rect.height / 2 + sin * diagonal
@@ -108,26 +101,26 @@ function useDiagonalPattern(
 // Component
 // ─────────────────────────────────────────────────────────────────────────────
 
-interface LoginButtonProps {
+interface AnimatedLinesProps {
   onClick?: () => void
   label?: string
   className?: string
 }
 
-export function LoginButton({ onClick, label = 'LOG IN', className = '' }: LoginButtonProps) {
+export function AnimatedLines({
+  onClick,
+  label = 'ANIMATED LINES',
+  className = '',
+}: AnimatedLinesProps) {
   const [isActive, setIsActive] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
 
   useDiagonalPattern(canvasRef, isActive)
 
-  // Magnetic and Spotlight effects
+  // Spotlight effect
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
-
-  // Subtle magnetic pull for the label
-  const labelX = useSpring(useMotionValue(0), { stiffness: 150, damping: 15, mass: 0.1 })
-  const labelY = useSpring(useMotionValue(0), { stiffness: 150, damping: 15, mass: 0.1 })
 
   const handlePointerMove = (e: React.PointerEvent<HTMLButtonElement>) => {
     if (!buttonRef.current) return
@@ -137,18 +130,10 @@ export function LoginButton({ onClick, label = 'LOG IN', className = '' }: Login
 
     mouseX.set(relativeX)
     mouseY.set(relativeY)
-
-    // Calculate magnetic pull (max 4px displacement)
-    const centerX = rect.width / 2
-    const centerY = rect.height / 2
-    labelX.set((relativeX - centerX) * 0.1)
-    labelY.set((relativeY - centerY) * 0.1)
   }
 
   const handlePointerLeave = () => {
     setIsActive(false)
-    labelX.set(0)
-    labelY.set(0)
   }
 
   const handlePointerEnter = () => {
@@ -170,10 +155,10 @@ export function LoginButton({ onClick, label = 'LOG IN', className = '' }: Login
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
       className={cn(
         'group relative inline-flex items-center justify-center overflow-hidden',
-        'min-w-[100px] px-6 py-2',
+        'min-w-[150px] px-6 py-2',
         'border rounded-sm',
         "font-['Iosevka',_var(--font-mono)] text-base font-medium tracking-[0.12em]",
-        'transition-colors duration-500',
+        'transition-colors duration-150',
         'outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-neutral-400',
         'cursor-pointer select-none',
         isActive
@@ -188,30 +173,21 @@ export function LoginButton({ onClick, label = 'LOG IN', className = '' }: Login
         ref={canvasRef}
         className={cn(
           'absolute inset-0 w-full h-full pointer-events-none mix-blend-screen',
-          'transition-opacity duration-300 ease-[cubic-bezier(0.77,0,0.175,1)]',
+          'transition-opacity duration-0',
           isActive ? 'opacity-100' : 'opacity-0'
         )}
       />
 
       {/* Spotlight Hover Effect */}
       <motion.div
-        className="absolute inset-0 z-0 pointer-events-none bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className="absolute inset-0 z-0 pointer-events-none bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-150"
         style={{ maskImage, WebkitMaskImage: maskImage }}
       />
 
-      {/* Label with magnetic pull */}
-      <motion.span
-        style={{ x: labelX, y: labelY }}
-        className={cn(
-          'relative z-10 block leading-none',
-          'transition-transform duration-300 ease-[cubic-bezier(0.77,0,0.175,1)]',
-          isActive ? 'scale-[1.02]' : 'scale-100'
-        )}
-      >
-        {label}
-      </motion.span>
+      {/* Label */}
+      <span className="relative z-10 block leading-none">{label}</span>
     </motion.button>
   )
 }
 
-export default LoginButton
+export default AnimatedLines

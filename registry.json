@@ -4,20 +4,20 @@
   "homepage": "https://github.com/ezDecode/ez.ui",
   "items": [
     {
-      "name": "login-button",
+      "name": "animated-lines",
       "description": "A component from ez-ui",
       "type": "registry:block",
       "dependencies": ["motion", "react"],
       "files": [
         {
           "type": "registry:component",
-          "path": "registry/new-york/login-button/index.ts",
-          "target": "components/ui/login-button/index.ts"
+          "path": "registry/new-york/animated-lines/animated-lines.tsx",
+          "target": "components/ui/animated-lines/animated-lines.tsx"
         },
         {
           "type": "registry:component",
-          "path": "registry/new-york/login-button/login-button.tsx",
-          "target": "components/ui/login-button/login-button.tsx"
+          "path": "registry/new-york/animated-lines/index.ts",
+          "target": "components/ui/animated-lines/index.ts"
         }
       ]
     },
@@ -56,29 +56,6 @@
           "type": "registry:file",
           "path": "registry/new-york/stamp-collection/assets/stamp_05.webp",
           "target": "components/ui/stamp-collection/assets/stamp_05.webp"
-        }
-      ]
-    },
-    {
-      "name": "theme-switcher",
-      "description": "A component from ez-ui",
-      "type": "registry:block",
-      "dependencies": ["react", "motion"],
-      "files": [
-        {
-          "type": "registry:component",
-          "path": "registry/new-york/theme-switcher/index.ts",
-          "target": "components/ui/theme-switcher/index.ts"
-        },
-        {
-          "type": "registry:component",
-          "path": "registry/new-york/theme-switcher/theme-context.tsx",
-          "target": "components/ui/theme-switcher/theme-context.tsx"
-        },
-        {
-          "type": "registry:component",
-          "path": "registry/new-york/theme-switcher/theme-switcher.tsx",
-          "target": "components/ui/theme-switcher/theme-switcher.tsx"
         }
       ]
     },
