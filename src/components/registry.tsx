@@ -1,7 +1,6 @@
 import { StampCollection } from '@/components/ui/stamp-collection'
 import { AnimatedLines } from '@/components/ui/animated-lines'
-import { SegmentedToc, DemoHelpers } from '@/components/ui/toc'
-import { VerticalDotToc } from '@/components/ui/vertical-dots'
+import { VerticalDotToc, DemoHelpers } from '@/components/ui/vertical-dots'
 import type { ReactNode } from 'react'
 
 /* ─── Registry ─────────────────────────────────────────────────────────── */
@@ -28,17 +27,6 @@ export const registry: RegistryEntry[] = [
     description: 'Diagonal · hover · canvas',
     Section: <AnimatedLines />,
     command: 'npx shadcn@latest add https://ez-ui-pi.vercel.app/r/animated-lines.json',
-  },
-  {
-    id: 'toc',
-    name: 'Segmented TOC',
-    description: 'Progress · segments · toc',
-    Section: (
-      <div className="flex flex-col gap-8 w-full items-center">
-        <SegmentedToc items={DemoHelpers.TOC_ITEMS.slice(0, 4)} />
-      </div>
-    ),
-    command: 'npx shadcn@latest add https://ez-ui-pi.vercel.app/r/toc.json',
   },
   {
     id: 'vertical-dots',

@@ -58,8 +58,6 @@ function DotPill({ active, complete, fillDuration, onClick }: DotPillProps) {
       onClick={onClick}
       className="relative w-1.5 rounded-full cursor-pointer isolate overflow-hidden"
       initial={false}
-      whileHover={{ scale: 1.15 }}
-      whileTap={{ scale: 0.9 }}
       animate={{
         height: active ? 27 : 6,
         backgroundColor: active ? 'var(--color-neutral-700)' : 'var(--color-neutral-600)',

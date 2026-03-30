@@ -1,5 +1,6 @@
 export { VerticalDotToc } from './vertical-dot-toc'
 export { VerticalDotProgress } from './vertical-dot-progress'
+export { DemoHelpers } from './demo-helpers'
 
 export const metadata = {
   id: 'vertical-dots',
