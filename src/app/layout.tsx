@@ -23,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <body className="w-full min-h-dvh relative font-sans text-base bg-background text-foreground antialiased [text-rendering:optimizeLegibility] [-webkit-tap-highlight-color:transparent] selection:bg-accent-subtle selection:text-accent">
-        <main className="relative mx-auto w-full max-w-content px-6 sm:px-8 lg:px-0 pt-16 sm:pt-20 pb-24">
+        <main className="relative mx-auto w-full px-2.5 sm:px-3 lg:px-5 xl:px-10 pt-16 sm:pt-20 pb-24">
           {children}
         </main>
       </body>

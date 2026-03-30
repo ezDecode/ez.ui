@@ -9,31 +9,34 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
-      {/* ── Hero pill ── */}
-      <header>
-        <span className="inline-flex items-center justify-center px-2 py-1.5 rounded-full bg-neutral-800/60 text-[0.8125rem] sm:text-sm font-medium font-components text-foreground-secondary leading-none whitespace-nowrap">
-          Animated React Components
-        </span>
-      </header>
+      {/* ── Intro Section ── */}
+      <div className="w-full max-w-content mx-auto">
+        {/* ── Hero pill ── */}
+        <header>
+          <span className="inline-flex items-center justify-center px-2 py-1.5 rounded-full bg-neutral-800/60 text-[0.8125rem] sm:text-sm font-medium font-components text-foreground-secondary leading-none whitespace-nowrap">
+            Animated React Components
+          </span>
+        </header>
 
-      <p className="mt-5 mb-0 text-base leading-relaxed text-foreground-secondary">
-        A collection of refined, purposeful animations and interactive components built with Motion.
-        Copy, adapt, and ship.
-      </p>
+        <p className="mt-5 mb-0 text-base leading-relaxed text-foreground-secondary">
+          A collection of refined, purposeful animations and interactive components built with
+          Motion. Copy, adapt, and ship.
+        </p>
 
-      {/* ── Divider — generous breathing before content ── */}
-      <div className="h-px bg-border mt-10" />
+        {/* ── Divider — generous breathing before content ── */}
+        <div className="h-px bg-border mt-10" />
 
-      {/* ── Section heading — tight to content below ── */}
-      <div className="flex items-center justify-between gap-3 mt-5 mb-8">
-        <h2 className="text-base font-semibold text-foreground">Components</h2>
-        <span className="text-base tabular-nums text-foreground-muted">
-          {registry.length.toString().padStart(2, '0')}
-        </span>
+        {/* ── Section heading — tight to content below ── */}
+        <div className="flex items-center justify-between gap-3 mt-5 mb-8">
+          <h2 className="text-base font-semibold text-foreground">Components</h2>
+          <span className="text-base tabular-nums text-foreground-muted">
+            {registry.length.toString().padStart(2, '0')}
+          </span>
+        </div>
       </div>
 
-      {/* ── Component Previews — grid/list of large cards ── */}
-      <div className="flex flex-col gap-12">
+      {/* ── Component Previews — responsive grid ── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
         {registry.map((entry, i) => (
           <motion.article
             key={entry.id}
@@ -50,7 +53,7 @@ export default function Home() {
             }
             className="group flex flex-col overflow-hidden rounded-md"
           >
-            <div className="relative flex items-center justify-center p-6 sm:p-12 bg-neutral-800/40 rounded-t-md min-h-[300px]">
+            <div className="relative flex items-center justify-center p-4 sm:p-8 bg-neutral-800/40 rounded-t-md min-h-[300px]">
               {entry.Section}
             </div>
             <div className="flex items-center justify-between gap-4 px-3.5 py-2 border-t border-neutral-700/50 bg-neutral-800/25 rounded-b-md">
@@ -69,28 +72,30 @@ export default function Home() {
       </div>
 
       {/* ── Footer — closing rhythm ── */}
-      <div className="h-px bg-border mt-16" />
-      <footer className="flex items-center justify-between py-5 text-foreground-muted">
-        <span className="text-base">
-          by{' '}
+      <div className="w-full max-w-content mx-auto">
+        <div className="h-px bg-border mt-16" />
+        <footer className="flex items-center justify-between py-5 text-foreground-muted">
+          <span className="text-base">
+            by{' '}
+            <a
+              href="https://github.com/ezDecode"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="no-underline text-foreground-secondary hover:text-foreground transition-colors duration-200"
+            >
+              @ezDecode
+            </a>
+          </span>
           <a
-            href="https://github.com/ezDecode"
+            href="https://github.com/ezDecode/ez.ui"
             target="_blank"
             rel="noopener noreferrer"
             className="no-underline text-foreground-secondary hover:text-foreground transition-colors duration-200"
           >
-            @ezDecode
+            GitHub
           </a>
-        </span>
-        <a
-          href="https://github.com/ezDecode/ez.ui"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="no-underline text-foreground-secondary hover:text-foreground transition-colors duration-200"
-        >
-          GitHub
-        </a>
-      </footer>
+        </footer>
+      </div>
     </div>
   )
 }
